@@ -1,11 +1,12 @@
 import { createWriteStream, glob, promises, writeFile, writeFileSync } from "fs";
-import { getTags } from "./alias-map.js";
 import { ALLOWED_EXTENSIONS, ConvertFile, FILE_EXTENSION_REGEXP, tryFileExtension } from "./convert-to-json.js";
 import { resolve } from "path";
-await getTags().then(async (val) => {
-	const in_dir = resolve(val.path),
-		out_dir = resolve(val.out),
-        file_name = val.name ?? "GENERATED_JSON_DATA"
+import patchedYargs from "./yargs.js";
+Promise.resolve(patchedYargs.argv).then((argv)=>{
+
+	const in_dir = resolve(argv.path as string),
+		out_dir = resolve(argv.out as string),
+        file_name = (argv.name ?? "GENERATED_JSON_DATA") as string
 
 	const fileData: { [key: string]: object } = {};
 
@@ -38,9 +39,9 @@ await getTags().then(async (val) => {
 				});
 
 			await Promise.allSettled(total).then(async () => {
-				promises.writeFile(out_dir + `/${file_name.toLowerCase()}.ts`,`export const ${file_name.toUpperCase()} = ${JSON.stringify(fileData)} ${val["const"] ? "as const": ""};`);
+				promises.writeFile(out_dir + `/${file_name.toLowerCase()}.ts`,`export const ${file_name.toUpperCase()} = ${JSON.stringify(fileData)} ${argv["const"] ? "as const": ""};`);
 				console.log("DATA SAVED TO FILE -> " + out_dir + `/${file_name.toLowerCase()}.ts`);
 			});
 		},
 	);
-});
+})
