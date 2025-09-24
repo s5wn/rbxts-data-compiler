@@ -38,7 +38,7 @@ await getTags().then(async (val) => {
 				});
 
 			await Promise.allSettled(total).then(async () => {
-				promises.writeFile(out_dir + `/${file_name.toLowerCase()}.ts`,`export const ${file_name.toUpperCase()} = ${JSON.stringify(fileData)} ${val["const"]!==undefined ? "as const": undefined};`);
+				promises.writeFile(out_dir + `/${file_name.toLowerCase()}.ts`,`export const ${file_name.toUpperCase()} = ${JSON.stringify(fileData)} ${val["const"]!==undefined ? "as const": ""};`);
 				console.log("DATA SAVED TO FILE -> " + out_dir + `/${file_name.toLowerCase()}.ts`);
 			});
 		},
