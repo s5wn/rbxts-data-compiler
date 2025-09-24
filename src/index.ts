@@ -3,9 +3,10 @@ import { getTags } from "./alias-map.js";
 import { ALLOWED_EXTENSIONS, ConvertFile, FILE_EXTENSION_REGEXP, tryFileExtension } from "./convert-to-json.js";
 
 await getTags().then(async (val) => {
-	const path = val.required.path,
-		out = val.required.out,
-        name = val.optional.name ?? "GENERATED_JSON_DATA"
+	console.log(val,"VALUE")
+	const path = val.path,
+		out = val.out,
+        name = val.name ?? "GENERATED_JSON_DATA"
 
 	const fileData: { [key: string]: object } = {};
 
@@ -33,7 +34,7 @@ await getTags().then(async (val) => {
 									p = p[v] as never;
 								});
 							}
-						}).catch((r)=>console.log("LOL, FAILED TO PARSE: " + r)),
+						}).catch((r)=>console.log("FAILED TO PARSE FILE: " + r)),
 					);
 				});
 

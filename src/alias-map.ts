@@ -6,11 +6,13 @@ export const ALLOWED_TAGS = {
 		out: ["out", "o"],
 	},
 	optional: {
-		name: ["name","n"]
-	}
+		name: ["name", "n"],
+	},
 };
 
-export async function getTags(): Promise<{ required: {[key in keyof typeof ALLOWED_TAGS["required"]]: string}, optional: {[key in keyof typeof ALLOWED_TAGS["optional"]]?: string} }> {
+export async function getTags(): Promise<
+	{ [key in keyof (typeof ALLOWED_TAGS)["required"]]: string } &{ [key in keyof (typeof ALLOWED_TAGS)["optional"]]?: string }
+> {
 	const patched = await Promise.resolve(patchedYargs.argv);
 	const res: { [key: string]: string } = {};
 	Object.keys(ALLOWED_TAGS.required).forEach((key) => {
@@ -23,9 +25,9 @@ export async function getTags(): Promise<{ required: {[key in keyof typeof ALLOW
 			)
 				res[key] = patched[aliasName];
 		});
-        if (!res[key]) throw new Error("MISSING TAG " + key + ". RERUN THE SCRIPT WITH IT SPECIFIED");
+		if (!res[key]) throw new Error("MISSING TAG " + key + ". RERUN THE SCRIPT WITH IT SPECIFIED");
 	});
-		Object.keys(ALLOWED_TAGS.optional).forEach((key) => {
+	Object.keys(ALLOWED_TAGS.optional).forEach((key) => {
 		const aliases = ALLOWED_TAGS.optional[key as keyof typeof ALLOWED_TAGS.optional];
 		aliases.forEach((aliasName) => {
 			if (
