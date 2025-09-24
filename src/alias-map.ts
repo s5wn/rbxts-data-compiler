@@ -7,7 +7,7 @@ export const ALLOWED_TAGS = {
 	},
 	optional: {
 		name: ["name", "n"],
-		["no-const"]: ["no-const"]
+		const: ["const"]
 	},
 };
 
