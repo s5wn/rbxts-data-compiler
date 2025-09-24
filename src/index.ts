@@ -2,7 +2,8 @@ import { createWriteStream, glob, promises, writeFile, writeFileSync } from "fs"
 import { ALLOWED_EXTENSIONS, ConvertFile, FILE_EXTENSION_REGEXP, tryFileExtension } from "./convert-to-json.js";
 import { resolve } from "path";
 import patchedYargs from "./yargs.js";
-Promise.resolve(patchedYargs.argv).then((argv)=>{
+const argv = await Promise.resolve(patchedYargs.argv);
+console.log(argv,"amamgagaaaaaaafjuhasifasif")
 
 	const in_dir = resolve(argv.path as string),
 		out_dir = resolve(argv.out as string),
@@ -44,4 +45,3 @@ Promise.resolve(patchedYargs.argv).then((argv)=>{
 			});
 		},
 	);
-})
