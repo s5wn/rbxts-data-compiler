@@ -3,7 +3,6 @@ import { ALLOWED_EXTENSIONS, ConvertFile, FILE_EXTENSION_REGEXP, tryFileExtensio
 import { resolve } from "path";
 import patchedYargs from "./yargs.js";
 const argv = await Promise.resolve(patchedYargs.argv);
-console.log(argv,"amamgagaaaaaaafjuhasifasif")
 
 	const in_dir = resolve(argv.path as string),
 		out_dir = resolve(argv.out as string),
