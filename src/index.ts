@@ -1,17 +1,17 @@
 import { createWriteStream, glob, promises, writeFile, writeFileSync } from "fs";
 import { getTags } from "./alias-map.js";
 import { ALLOWED_EXTENSIONS, ConvertFile, FILE_EXTENSION_REGEXP, tryFileExtension } from "./convert-to-json.js";
-
+import { resolve } from "path";
 await getTags().then(async (val) => {
 	console.log(val,"VALUE")
-	const path = val.path,
-		out = val.out,
-        name = val.name ?? "GENERATED_JSON_DATA"
+	const in_dir = resolve(val.path),
+		out_dir = resolve(val.out),
+        file_name = val.name ?? "GENERATED_JSON_DATA"
 
 	const fileData: { [key: string]: object } = {};
 
 	glob(
-		ALLOWED_EXTENSIONS.map((v) => path + "/**/*." + v),
+		ALLOWED_EXTENSIONS.map((v) => in_dir + "/**/*." + v),
 		async (err, files) => {
 			const total: Promise<void>[] = [];
 			files
@@ -21,7 +21,7 @@ await getTags().then(async (val) => {
 						Promise.try(async () => {
 							{
 								const data = await ConvertFile(fileName);
-								const relative = fileName.slice(path.length);
+								const relative = fileName.slice(in_dir.length);
 								let p: typeof fileData = fileData;
 								relative.split("/").forEach((v, i, arr) => {
 									if (v === "") return;
@@ -42,7 +42,7 @@ await getTags().then(async (val) => {
 				//console.warn("DOING THIS EVIL THANG");
 
                 //JSON.stringify(fileData)
-				promises.writeFile(out + `/${name.toLowerCase()}.ts`,`export const ${name.toUpperCase()} = ${JSON.stringify(fileData)} as const`);
+				promises.writeFile(out_dir + `/${file_name.toLowerCase()}.ts`,`export const ${file_name.toUpperCase()} = ${JSON.stringify(fileData)} as const`);
 
 			});
 		},
