@@ -22,8 +22,8 @@ await getTags().then(async (val) => {
 								const data = await ConvertFile(fileName);
 								const relative = fileName.slice(in_dir.length);
 								let p: typeof fileData = fileData;
-								console.warn(relative.split("/"),"SPLIT ARR");
-								relative.split("/").forEach((v, i, arr) => {
+								console.warn(relative.replace(FILE_EXTENSION_REGEXP,"").split("/"),"SPLIT ARR");
+								relative.replace(FILE_EXTENSION_REGEXP,"").split("/").forEach((v, i, arr) => {
 									if (v === "") return;
 									if (i === arr.length - 1) {
 										p[v.replace(FILE_EXTENSION_REGEXP,"")] = data as never;
