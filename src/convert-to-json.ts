@@ -22,7 +22,6 @@ export async function ConvertFile(path: string) {
 			break;
 	}
 	if (!result) throw new Error("FAILED TO PARSE FILE");
-	console.warn(result," \n \n \n \n PARSED \n ",path)
 	return result; // json data
 }
 export function tryFileExtension(path: string) {
