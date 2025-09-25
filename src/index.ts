@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { createWriteStream, glob, promises, writeFile, writeFileSync } from "fs";
 import { ALLOWED_EXTENSIONS, ConvertFile, FILE_EXTENSION_REGEXP, tryFileExtension } from "./convert-to-json.js";
 import { resolve } from "path";

@@ -10,13 +10,13 @@
     "target": "esnext",
     "types": ["node"],
     // For nodejs:
-    // "lib": ["esnext"],
+     "lib": ["esnext"],
     // "types": ["node"],
     // and npm install -D @types/node
 
     // Other Outputs
     //"sourceMap": true,
-    "declaration": true,
+    //"declaration": true,
     //"declarationMap": true,
 
     // Stricter Typechecking Options

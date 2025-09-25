@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fs from "node:fs";
 import toml from "toml";
 import yaml from "yaml";
