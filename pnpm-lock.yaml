@@ -11,9 +11,6 @@ importers:
       glob:
         specifier: ^11.0.3
         version: 11.0.3
-      rbxts-data-compiler:
-        specifier: file:/Users/s5wn/Coding/rbxts/rbxts-data-compiler/rbxts-data-compiler-1.2.1.tgz
-        version: file:rbxts-data-compiler-1.2.1.tgz
       toml:
         specifier: ^3.0.0
         version: 3.0.0
@@ -564,11 +561,6 @@ packages:
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
-
-  rbxts-data-compiler@file:rbxts-data-compiler-1.2.1.tgz:
-    resolution: {integrity: sha512-a+F5jTXY+EGJfW4paARdnuncuTJkpd/zIXinIbNhuv2q44cGqqYN2znTiwXO7jykLXymZjg/Rzel81aPOit3nQ==, tarball: file:rbxts-data-compiler-1.2.1.tgz}
-    version: 1.2.1
-    hasBin: true
 
   resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
@@ -1236,13 +1228,6 @@ snapshots:
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
-
-  rbxts-data-compiler@file:rbxts-data-compiler-1.2.1.tgz:
-    dependencies:
-      glob: 11.0.3
-      toml: 3.0.0
-      yaml: 2.8.1
-      yargs: 18.0.0
 
   resolve-from@4.0.0: {}
 

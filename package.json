@@ -1,12 +1,12 @@
 {
   "name": "rbxts-data-compiler",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "compiles multiple data files inside a directory into one big .ts file",
   "bin": "./out/index.js",
   "type": "module",
   "scripts": {},
   "keywords": [],
-  "author": "",
+  "author": "s5wn",
   "license": "ISC",
   "packageManager": "pnpm@10.8.0",
   "dependencies": {
