@@ -43,7 +43,7 @@ export async function generateTypes(file:RecursiveObject, typeFile: string): Pro
         const stack = [];
         const [lower,upper] = getClosingBracket(iterStr);
         if (lower>-1) {
-            return `${index}: ${typeData.substring(lower,upper)} \n`; 
+            return `${index}: ${typeData.substring(lower,upper+1)} \n`; 
         }
         return "";
     }
