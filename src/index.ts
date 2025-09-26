@@ -40,7 +40,7 @@ const argv = await Promise.resolve(patchedYargs.argv);
 								relative.replace(FILE_EXTENSION_REGEXP,"").split(path.sep).forEach((v, i, arr) => {
 									if (v === "") return;
 									if (i === arr.length - 1) {
-										p[path.basename(relative)] = data as never;
+										p[path.parse(relative).name] = data as never;
 										return;
 									}
 									p[v] ??= {};
