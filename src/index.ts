@@ -6,7 +6,7 @@ import patchedYargs from "./yargs.js";
 import { generateTypes } from "./type-gen.js";
 import { warn } from "console";
 
-type RecursiveObject = {[key:string]: RecursiveObject};
+export type RecursiveObject = {[key:string]: RecursiveObject};
 
 const argv = await Promise.resolve(patchedYargs.argv);
 
@@ -18,8 +18,6 @@ const argv = await Promise.resolve(patchedYargs.argv);
 	const globMap = ALLOWED_EXTENSIONS.map((v) => path.join(in_dir, "/**/*." + v));
 	warn("globmap",globMap)
 	const typeArg = (argv.t ?? argv.types) as string | undefined;
-	const typeMap = typeArg!==undefined ? await generateTypes(globMap,resolve(typeArg)) : undefined;
-
 
 	const fileData: RecursiveObject = {};
 
@@ -53,6 +51,7 @@ const argv = await Promise.resolve(patchedYargs.argv);
 				});
 
 			await Promise.allSettled(total).then(async () => {
+				const typeMap = typeArg!==undefined ? await generateTypes(fileData,typeArg) : undefined;
 				const result = JSON.stringify(fileData,null,4)
 				await promises.writeFile(out_dir + `/${file_name.toLowerCase()}.ts`,`export const ${file_name.toUpperCase()} = ${result} ${argv["const"] ? "as const": ""} ${typeMap!==undefined ? `satisfies ${typeMap}` : ""};`);
 				console.log("DATA SAVED TO FILE -> " + out_dir + `/${file_name.toLowerCase()}.ts`);
