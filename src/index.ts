@@ -54,8 +54,8 @@ const argv = await Promise.resolve(patchedYargs.argv);
 				const typeMap = typeArg!==undefined ? await generateTypes(fileData,typeArg) : undefined;
 				const result = JSON.stringify(fileData,null,4)
 				await promises.writeFile(out_dir + `/${file_name.toLowerCase()}.ts`,`
-				${typeMap!==undefined ? `export type ${file_name.toUpperCase()+"_TYPE"} = ${typeMap}` : ""}
-				export const ${"T"+file_name.toUpperCase()} = ${result} ${argv["const"] ? "as const": ""} ${typeMap!==undefined ? `satisfies ${"T"+file_name.toUpperCase()}` : ""};`);
+				${typeMap!==undefined ? `export type ${"T"+file_name.toUpperCase()} = ${typeMap}` : ""}
+				export const ${file_name.toUpperCase()} = ${result} ${argv["const"] ? "as const": ""} ${typeMap!==undefined ? `satisfies ${"T"+file_name.toUpperCase()}` : ""};`);
 				console.log("DATA SAVED TO FILE -> " + out_dir + `/${file_name.toLowerCase()}.ts`);
 			});
 		},
