@@ -37,7 +37,7 @@ export async function generateTypes(file:RecursiveObject, typeFile: string): Pro
         if (!hasMatch) return `${index}: any \n`;
         const firstIndex = hasMatch[0];
         const upperBound = (hasMatch.index!+firstIndex.length);
-        const indexStart = typeData.substring(upperBound).search("{");
+        const indexStart = typeData.substring(upperBound+1).search("{");
         if (indexStart===-1) return `${index}: any \n`;
         const iterStr = typeData.substring(indexStart);
         const stack = [];
