@@ -5,7 +5,7 @@ import { promises } from "fs";
 type StringObject = {[key:string]: string};
 
 export async function generateTypes(file:RecursiveObject, typeFile: string): Promise<string> {
-    const toReturn: StringObject = {}
+    let toReturn = "{\n" 
     const typeData = (await promises.readFile(typeFile)).toString().trim();
     function getType(index:string) {
         const exp = new RegExp(String.raw`\s${index}\s`,"m")
@@ -16,10 +16,10 @@ export async function generateTypes(file:RecursiveObject, typeFile: string): Pro
         const substr = typeData.substring(upperBound);
         const exp2 = /{([^}]*)}/;
         const returnVal = substr.match(exp2)
-        return returnVal?.[0] ?? "any"; 
+        return `${index}: ${returnVal?.[0] ?? "any"} \n`; 
     }
     Object.keys(file).forEach((index)=>{
-        toReturn[index] = getType(index);
+        toReturn += getType(index);
     })
-    return JSON.stringify(toReturn,null,4);
+    return toReturn + "}";
 }
