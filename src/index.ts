@@ -15,7 +15,7 @@ const argv = await Promise.resolve(patchedYargs.argv);
         file_name = (argv.name ?? argv.n ?? "GENERATED_JSON_DATA") as string
 	
 	
-	const globMap = ALLOWED_EXTENSIONS.map((v) => path.join(in_dir, "/**/*." , v));
+	const globMap = ALLOWED_EXTENSIONS.map((v) => path.join(in_dir, "/**/*." + v));
 	warn("globmap",globMap)
 	const typeArg = (argv.t ?? argv.types) as string | undefined;
 	const typeMap = typeArg!==undefined ? await generateTypes(globMap,resolve(typeArg)) : undefined;
