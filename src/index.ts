@@ -54,7 +54,7 @@ const argv = await Promise.resolve(patchedYargs.argv);
 
 			await Promise.allSettled(total).then(async () => {
 				function replacer(substr:string) {
-					return substr+"\n"
+					return "\n"+substr+"\n"
 				}
 				let result = JSON.stringify(fileData).replaceAll(/[{}]/gm,replacer);
 				await promises.writeFile(out_dir + `/${file_name.toLowerCase()}.ts`,`export const ${file_name.toUpperCase()} = ${result} ${argv["const"] ? "as const": ""} ${typeMap!==undefined ? `satisfies ${typeMap}` : ""};`);
