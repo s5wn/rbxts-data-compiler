@@ -53,10 +53,7 @@ const argv = await Promise.resolve(patchedYargs.argv);
 				});
 
 			await Promise.allSettled(total).then(async () => {
-				function replacer(substr:string) {
-					return "\n"+substr+"\n"
-				}
-				let result = JSON.stringify(fileData).replaceAll(/[{}]/gm,replacer);
+				const result = JSON.stringify(fileData,null,4)
 				await promises.writeFile(out_dir + `/${file_name.toLowerCase()}.ts`,`export const ${file_name.toUpperCase()} = ${result} ${argv["const"] ? "as const": ""} ${typeMap!==undefined ? `satisfies ${typeMap}` : ""};`);
 				console.log("DATA SAVED TO FILE -> " + out_dir + `/${file_name.toLowerCase()}.ts`);
 			});
