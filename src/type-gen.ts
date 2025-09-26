@@ -34,18 +34,17 @@ export async function generateTypes(file:RecursiveObject, typeFile: string): Pro
     function getType(index:string) {
         const exp = new RegExp(String.raw`\s${index}\s`,"m")
         const hasMatch = typeData.match(exp);
-        if (!hasMatch) return `${index}: any \n`;
+        if (!hasMatch) return `${index}: any; \n`;
         const firstIndex = hasMatch[0];
         const upperBound = (hasMatch.index!+firstIndex.length);
-        const indexStart = typeData.substring(upperBound+1).search("{");
-        if (indexStart===-1) return `${index}: any \n`;
+        const indexStart = typeData.substring(upperBound+1).trim().search("{");
+        if (indexStart===-1) return `${index}: any; \n`;
         const iterStr = typeData.substring(indexStart);
-        const stack = [];
         const [lower,upper] = getClosingBracket(iterStr);
         if (lower>-1) {
-            return `${index}: ${typeData.substring(lower,upper+1)} \n`; 
+            return `${index}: ${typeData.substring(lower,upper+1)}; \n`; 
         }
-        return `${index}: any \n`;
+        return `${index}: any; \n`;
     }
     Object.keys(file).forEach((index)=>{
         toReturn += getType(index);
