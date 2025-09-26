@@ -1,18 +1,22 @@
 #!/usr/bin/env node
 import { createWriteStream, glob, promises, writeFile, writeFileSync } from "fs";
 import { ALLOWED_EXTENSIONS, ConvertFile, FILE_EXTENSION_REGEXP, tryFileExtension } from "./convert-to-json.js";
-import { resolve } from "path";
+import path, { resolve } from "path";
 import patchedYargs from "./yargs.js";
+
+type RecursiveObject = {[key:string]: RecursiveObject};
+
 const argv = await Promise.resolve(patchedYargs.argv);
 
-	const in_dir = resolve(argv.path as string),
-		out_dir = resolve(argv.out as string),
-        file_name = (argv.name ?? "GENERATED_JSON_DATA") as string
+	const in_dir = resolve((argv.p ?? argv.path) as string),
+		out_dir = resolve((argv.o ?? argv.out) as string),
+        file_name = (argv.name ?? argv.n ?? "GENERATED_JSON_DATA") as string
 
-	const fileData: { [key: string]: object } = {};
+
+	const fileData: RecursiveObject = {};
 
 	glob(
-		ALLOWED_EXTENSIONS.map((v) => in_dir + "/**/*." + v),
+		ALLOWED_EXTENSIONS.map((v) => path.join(in_dir, "/**/*." , v)),
 		async (err, files) => {
 			const total: Promise<void>[] = [];
 			files
@@ -22,17 +26,16 @@ const argv = await Promise.resolve(patchedYargs.argv);
 						Promise.try(async () => {
 							{
 								const data = await ConvertFile(fileName);
-								const relative = fileName.slice(in_dir.length);
-								let p: typeof fileData = fileData;
-								console.warn(relative.replace(FILE_EXTENSION_REGEXP,"").split("/"),"SPLIT ARR");
-								relative.replace(FILE_EXTENSION_REGEXP,"").split("/").forEach((v, i, arr) => {
+								const relative = path.relative(fileName,in_dir)
+								let p: RecursiveObject = fileData;
+								relative.replace(FILE_EXTENSION_REGEXP,"").split(path.sep).forEach((v, i, arr) => {
 									if (v === "") return;
 									if (i === arr.length - 1) {
 										p[v.replace(FILE_EXTENSION_REGEXP,"")] = data as never;
 										return;
 									}
 									p[v] ??= {};
-									p = p[v] as never;
+									p = p[v];
 								});
 							}
 						}).catch((r)=>console.log("FAILED TO PARSE FILE: " + r)),
