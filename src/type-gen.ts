@@ -10,7 +10,7 @@ export async function generateTypes(file:RecursiveObject, typeFile: string): Pro
     function getType(index:string) {
         const exp = new RegExp(String.raw`\s${index}\s`,"m")
         const hasMatch = typeData.match(exp);
-        if (!hasMatch) return "any";
+        if (!hasMatch) return `${index}: any \n`; ;
         const firstIndex = hasMatch[0];
         const upperBound = (hasMatch.index!+firstIndex.length);
         const substr = typeData.substring(upperBound);
