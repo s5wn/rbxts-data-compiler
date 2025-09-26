@@ -1,3 +1,0 @@
-interface bugs {
-    s: number
-}

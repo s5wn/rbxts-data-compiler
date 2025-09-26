@@ -6,7 +6,7 @@ import patchedYargs from "./yargs.js";
 import { generateTypes } from "./type-gen.js";
 import { warn } from "console";
 
-export type RecursiveObject = {[key:string]: RecursiveObject};
+export type RecursiveObject = {[key:string]: RecursiveObject | string};
 
 const argv = await Promise.resolve(patchedYargs.argv);
 
