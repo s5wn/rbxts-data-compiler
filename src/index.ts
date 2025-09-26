@@ -34,13 +34,13 @@ const argv = await Promise.resolve(patchedYargs.argv);
 						Promise.try(async () => {
 							{
 								const data = await ConvertFile(fileName);
-								const relative = path.relative(fileName,in_dir)
+								const relative = path.relative(in_dir,fileName)
 								let p: RecursiveObject = fileData;
 								console.warn("ITER: ", relative.replace(FILE_EXTENSION_REGEXP,"").split(path.sep))
 								relative.replace(FILE_EXTENSION_REGEXP,"").split(path.sep).forEach((v, i, arr) => {
 									if (v === "") return;
 									if (i === arr.length - 1) {
-										p[v.replace(FILE_EXTENSION_REGEXP,"")] = data as never;
+										p[path.basename(relative)] = data as never;
 										return;
 									}
 									p[v] ??= {};
